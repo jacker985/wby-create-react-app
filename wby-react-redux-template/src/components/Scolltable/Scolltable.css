@@ -1,0 +1,54 @@
+/*定义滚动条宽高及背景，宽高分别对应横竖滚动条的尺寸*/
+
+.scrollbar {
+    width: 100%;
+    border: 1px solid #bbb;
+}
+
+.top {
+    clear: both;
+    display: block;
+    height: 20px;
+    margin-top: 10px;
+    overflow-x: scroll;
+    width: 91%;
+    position: fixed;
+    bottom: 0px;
+    z-index: 99;
+}
+
+.scrollbar .ant-table-body {
+    clear: both;
+    overflow-x: auto!important;
+    width: 100%;
+}
+.is-windows .scrollbar .ant-table-body{
+    overflow-x: hidden!important;
+}
+
+.scrollbar ::-webkit-scrollbar {
+    width: 6px;
+    height: 12px;
+    background-color: #fff;
+}
+
+.scrollbar ::-webkit-scrollbar:hover {
+    background-color: #eee;
+}
+
+.scrollbar ::-webkit-scrollbar-thumb {
+    min-height: 11px;
+    min-width: 5px;
+    border: 1px solid#AAA;
+    background-color: #AAA;
+}
+
+.scrollbar ::-webkit-scrollbar-thumb:hover {
+    min-height: 9px;
+    min-width: 5px;
+    background-color: #888;
+}
+
+.scrollbar ::-webkit-scrollbar-thumb:active {
+    background-color: #888;
+}

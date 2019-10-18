@@ -1,0 +1,27 @@
+.skeleton-container {
+  .animated-background {
+    animation: placeHolderShimmer 1.6s linear forwards infinite;
+    background: #f6f7f8;
+    background: linear-gradient(to right, #eee 8%, #ddd 21%, #eee 43%);
+    background-size: 1200px 104px;
+    &.head {
+      height: 24px;
+      margin-bottom: 12px;
+    }
+    &.body {
+      margin-top: 20px;
+      height: 250px;
+    }
+  }
+  @keyframes placeHolderShimmer {
+    0% {
+      background-position: -468px 0
+    }
+    100% {
+      background-position: 468px 0
+    }
+  }
+}
+
+
+
