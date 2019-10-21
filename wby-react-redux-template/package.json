@@ -31,6 +31,7 @@
 		"redux-promise": "^0.5.3",
 		"redux-thunk": "^2.2.0",
 		"superagent": "^3.8.2",
+		"wby-react-scripts": "^1.0.2",
 		"wbyui": "^1.2.2"
 	},
 	"scripts": {
