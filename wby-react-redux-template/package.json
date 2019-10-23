@@ -47,7 +47,7 @@
 	"devDependencies": {
 		"eslint": "4.x",
 		"eslint-plugin-react": "^7.10.0",
-		"webpack-bundle-analyzer": "^2.13.1"
+		"webpack-bundle-analyzer": "^3.3.2"
 	},
 	"pre-commit": [
 		"precommit-msg",
