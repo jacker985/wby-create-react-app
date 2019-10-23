@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 'use strict';
-console.log(process.version)
+// console.log(process.version)
 var currentNodeVersion = process.version;
 var semver = currentNodeVersion.split('.');
 var major = semver[0];

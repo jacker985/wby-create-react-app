@@ -30,12 +30,9 @@ if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
 
 const config = configFactory('production');
 
-
-// module.exports = function(){
-console.log("======")
+//checkBrowsers 检查浏览器版本
 checkBrowsers(paths.appPath, isInteractive).then(() => {
     const data = measureFileSizesBeforeBuild(paths.appBuild);
-    console.log("======")
     return data;
 }).then((previousFileSizes) => {
     fs.emptyDirSync(paths.appBuild);
@@ -83,7 +80,6 @@ err => {
     printBuildError(err);
     process.exit(1)
 })
-// }
 
 function build(previousFileSizes){
     const compiler = webpack(config);

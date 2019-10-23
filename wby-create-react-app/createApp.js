@@ -19,7 +19,6 @@ let projectName;
 const program = new commander.Command(packageJson.name)
     .version(packageJson.version)
     .action(name => {
-        console.log("====")
         projectName = name
     })
     .option('--scripts-version <alternative-package>', 'use')
@@ -34,7 +33,6 @@ const program = new commander.Command(packageJson.name)
     })
     .parse(process.argv);
 
-// console.log(program)
 function install (root, useYarn, usePnp, dependencies, verbose, isOnline){
     return new Promise((resolve, reject) => {
         // let command;
@@ -81,7 +79,10 @@ function install (root, useYarn, usePnp, dependencies, verbose, isOnline){
         const proc = spawn.sync(command, args, { stdio: 'inherit' });
         if (proc.status !== 0) {
             console.error(`\`${command} ${args.join(' ')}\` failed`);
+            reject();
             return;
+        }else{
+            resolve();
         }
     })
 }
@@ -96,22 +97,18 @@ const createApp = async function (){
     } = program;
     const root = path.resolve(projectName);
     const appName = path.basename(root);
-    console.log(root, appName, projectName);
-
+    
     console.log(`Creating a new React app in ${chalk.green(root)}.`);
     console.log();
     //下载wby-template代码
-    console.log("-", `${chalk.green("createApp")}`)
     await downloadTemplate(projectName);
-    console.log("------", `${chalk.green("createApp")}`)
-    
+
     //执行安装包命令 yarn install 
     const appPackage = require(path.resolve(root, 'package.json'));
-    console.log(appPackage.dependencies)
+    // console.log(appPackage.dependencies)
     const originalDirectory = process.cwd();
     process.chdir(root)
     await install(root, null, null, Object.keys(appPackage.dependencies));
     process.exit(0);
-
 }
 createApp();

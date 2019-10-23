@@ -11,7 +11,6 @@ const repoUrl = "jacker985" || config('getVal', 'repo');
 const MetalSmith = require('metalsmith'); // 遍历文件夹 
 const { render } = require('consolidate').ejs;
 const promisifyRender = promisify(render); // 包装渲染方法
-console.log("------", "downloadTemplate")
 const fetchRepoList = async () => {
     const res = await axios.get(`https://api.github.com/orgs/zhu-cli/repos`);
     return res.data;
@@ -38,7 +37,6 @@ const download = async (repo, tag) => {
     if (tag) {
         api += `#${tag}`;
     }
-    console.log("--api: ", api)
     const dest = `${downloadDirectory}/${repo}`; // 将模板下载到对应的目录中 
     // await downLoadGit(api, dest);
     return dest; // 返回下载目录git
@@ -60,10 +58,10 @@ const main = async (projectName) => {
     const { branch } = await Inquirer.prompt({
         name : 'branch', 
         type : 'list',
-        message : 'please choice repo template to create project',
+        message : 'please choice repo branch template to create project',
         choices: branches
     });
-console.log(`chalk:  `, branch)
+
     // 下载项目
     const target = await wrapFetchAddLoading(download, 'download template')('wby', branch);
  
@@ -80,11 +78,10 @@ module.exports = main;
  * path.resolve()  当前执行命令的目录
  * __dirname 当前文件所在目录
  */
-const copy = async (target, projectName) => {
-    target = path.join(target, 'wby-react-redux-template');
-    const source = path.join(path.resolve(), projectName);
-    console.log( target, source)
-    await ncp(target, source);
+const copy = async (source, projectName) => {
+    source = path.join(source, 'wby-react-redux-template');
+    const target = path.join(path.resolve(), projectName);
+    await ncp(source, target);
 }
 // module.exports = copy;
 const renderEjs = async (target, projectName) => {
