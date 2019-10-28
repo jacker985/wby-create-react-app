@@ -6,7 +6,7 @@ const fs = require('fs');
 // const chalk = require('chalk');
 
 const appDirectory = fs.realpathSync(process.cwd());
-console.log("process.cwd(), appDirectory", process.cwd(), '\n', appDirectory)
+// console.log("process.cwd(), appDirectory", process.cwd(), '\n', appDirectory)
 const resolveApp = relativePath => {
   // console.log(appDirectory, relativePath)
   return path.resolve(appDirectory, relativePath)

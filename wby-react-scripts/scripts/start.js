@@ -16,7 +16,7 @@ const serverConfig = createDevServerConfig();
 // clearConsole();
 const compiler = webpack(config);
 compiler.hooks.beforeCompile.tap('beforeCompile', () => {
-    console.log("beforeCompile")
+    // console.log("beforeCompile")
 })
 compiler.hooks.invalid.tap('invalid', () => {
     if (isInteractive) {
@@ -28,7 +28,7 @@ compiler.hooks.done.tap('done', async () => {
     
     if (isInteractive) {
         // clearConsole();
-      }
+    }
 
     setTimeout(() => {
         // clearConsole();

@@ -21,7 +21,7 @@ const lessModuleRegex = /\.module\.less$/;
     require.resolve('./testModule.js'); 在这行代码中，我们使用require.resolve函数来查询当前目录下testModule.js模块文件的带有完整绝对路径的模块文件名。
     注意：使用require.resolve函数查询模块文件名时并不会加载该模块
  */
-console.log("require.resolve('style-loader'): ", require('style-loader'))
+
 module.exports = function(webpackEnv){
     const isEnvDevelopment = webpackEnv === 'development';
     // const isEnvProduction = webpackEnv === 'production';

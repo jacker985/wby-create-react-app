@@ -73,7 +73,7 @@ function install (root, useYarn, usePnp, dependencies, verbose, isOnline){
         }
         args = args.concat(dependencies);
 
-        console.log(`Installing react and react-dom using ${command}...`, args);
+        console.log(`Installing react react-dom ${dependencies.join(" ")} using ${command}...`);
         console.log();
 
         const proc = spawn.sync(command, args, { stdio: 'inherit' });
@@ -97,18 +97,27 @@ const createApp = async function (){
     } = program;
     const root = path.resolve(projectName);
     const appName = path.basename(root);
+    const packagePath = path.resolve(root, 'package.json');
     
     console.log(`Creating a new React app in ${chalk.green(root)}.`);
     console.log();
-    //下载wby-template代码
+    // const appPackage = require(path.resolve(root, 'package.json'));
+    // console.log(appPackage.scripts)
+    
+    // //下载wby-template代码
     await downloadTemplate(projectName);
 
     //执行安装包命令 yarn install 
-    const appPackage = require(path.resolve(root, 'package.json'));
+    const appPackage = require(packagePath);
+    appPackage.scripts.start = 'wby-react-scripts start';
+    appPackage.scripts.build = 'wby-react-scripts build';
+    
+    fs.writeFileSync(packagePath, JSON.stringify(appPackage, null, 2) + os.EOL);
     // console.log(appPackage.dependencies)
     const originalDirectory = process.cwd();
     process.chdir(root)
     await install(root, null, null, Object.keys(appPackage.dependencies));
+    
     process.exit(0);
 }
 createApp();
