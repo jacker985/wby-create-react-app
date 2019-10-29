@@ -7,7 +7,7 @@ const { promisify } = require('util');
 const config = require('./config');
 const downLoadGit = promisify(require('download-git-repo'));
 const ncp = promisify(require('ncp'));
-const repoUrl = "jacker985" || config('getVal', 'repo');
+const repoUrl = config('getVal', 'repo') || "jacker985";
 const MetalSmith = require('metalsmith'); // 遍历文件夹 
 const { render } = require('consolidate').ejs;
 const promisifyRender = promisify(render); // 包装渲染方法
@@ -18,7 +18,7 @@ const fetchRepoList = async () => {
 //https://api.github.com/repos/zhu-cli/vue-simple-template/branches
 //https://api.github.com/repos/aibaiejoy/wby/branches
 const fetchBranchesList = async (repo) => {
-    const url = `https://api.github.com/repos/aibaiejoy/wby/branches`;
+    const url = `https://api.github.com/repos/${repoUrl}/${repo}/branches`;
     const { data } = await axios.get(url);
     return data;
 }
@@ -38,7 +38,7 @@ const download = async (repo, tag) => {
         api += `#${tag}`;
     }
     const dest = `${downloadDirectory}/${repo}`; // 将模板下载到对应的目录中 
-    // await downLoadGit(api, dest);
+    await downLoadGit(api, dest);
     return dest; // 返回下载目录git
 };
 
@@ -51,10 +51,11 @@ const main = async (projectName) => {
     //     message : 'please choice repo template to create project',
     //     choices: repos
     // })
-    // let branches =  await wrapFetchAddLoading(fetchBranchesList, 'fetching tag list')();
-    let branches = ['develop', 'master']|| branches.map(item => item.name);
-    
-    //选择tag
+    let repo = 'wby-react-template';
+    let branches =  await wrapFetchAddLoading(fetchBranchesList, 'fetching template list')(repo);
+    branches = branches.map(item => item.name).filter(name => name !== 'master');
+ 
+    //选择分支
     const { branch } = await Inquirer.prompt({
         name : 'branch', 
         type : 'list',
@@ -63,7 +64,7 @@ const main = async (projectName) => {
     });
 
     // 下载项目
-    const target = await wrapFetchAddLoading(download, 'download template')('wby', branch);
+    const target = await wrapFetchAddLoading(download, 'download template')(repo, branch);
  
     if(!fs.existsSync(path.join(target, 'ask.js'))){
         //拷贝文件
@@ -79,7 +80,6 @@ module.exports = main;
  * __dirname 当前文件所在目录
  */
 const copy = async (source, projectName) => {
-    source = path.join(source, 'wby-react-redux-template');
     const target = path.join(path.resolve(), projectName);
     await ncp(source, target);
 }
