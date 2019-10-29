@@ -1,7 +1,7 @@
 
 const fs = require('fs-extra');
-const path = require('path');
-const os = require('os');
+// const path = require('path');
+// const os = require('os');
 
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
@@ -76,7 +76,6 @@ checkBrowsers(paths.appPath, isInteractive)
         const useTypeScript = fs.existsSync(paths.appTsConfig);
         const urls = prepareUrls(protocol, HOST, port); //生成请求的url，拼接 协议，host，端口；
 
-        console.log("urls: ", urls)
         const devSocket = {
             warnings: warnings => devServer.sockWrite(devServer.sockets, 'warnings', warnings),
             errors: errors => devServer.sockWrite(devServer.sockets, 'errors', errors)
@@ -91,10 +90,9 @@ checkBrowsers(paths.appPath, isInteractive)
         const proxyConfig = prepareProxy(proxySetting, paths.appPublic)
 
         const serverConfig = createDevServerConfig(proxyConfig, urls.lanUrlForConfig);
-
         const devServer = new WebpackDevServer(compiler, serverConfig);
 
-        fs.writeFileSync(path.resolve('proxy.js'), JSON.stringify(proxySetting, null, 2) + os.EOL + JSON.stringify(proxyConfig, null, 2) + os.EOL + JSON.stringify(serverConfig, null, 2) + os.EOL)
+        // fs.writeFileSync(path.resolve('proxy.js'), JSON.stringify(proxySetting, null, 2) + os.EOL + JSON.stringify(proxyConfig, null, 2) + os.EOL + JSON.stringify(serverConfig, null, 2) + os.EOL)
 
         devServer.listen(port, HOST, err => {
             if (err) {
@@ -106,7 +104,7 @@ checkBrowsers(paths.appPath, isInteractive)
             }
             console.log(chalk.cyan('Starting the development server...\n'));
             openBrowser(urls.localUrlForBrowser);
-        })
+        });
         ['SIGINT', 'SIGTERM'].forEach(function (sig) {
             process.on(sig, function () {
                 devServer.close();

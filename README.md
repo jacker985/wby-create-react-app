@@ -10,7 +10,7 @@
 
 开发计划：
 1. 替换模版文件的start,build 脚本
-
+2. Failed to decode param '/%PUBLIC_URL%/manifest.json'  解决这个问题
 
 ## 模版文件
 
