@@ -10,7 +10,7 @@
 
 开发计划：
 1. 替换模版文件的start,build 脚本
-2. Failed to decode param '/%PUBLIC_URL%/manifest.json'  解决这个问题
+2. 使用.env.production中的环境变量替换html模版中的变量怎么实现，参见相关问题3
 
 ## 模版文件
 
@@ -48,3 +48,17 @@
 
 node基础知识：
 process.cwd()   //执行命令的当前目录
+
+## 相关问题
+1. process.env什么时候清空？
+process.env.PUBLIC_URL 当process.exit(0|1)退出后会被清空
+
+2. 理解不了这块代码，从env中读取，为什么直接删除env呢
+// Make sure that including paths.js after env.js will read .env variables.
+delete require.cache[require.resolve('./paths')];
+
+3. 替换html模版中的变量怎么实现？
+//使用InterpolateHtmlPlugin插件，在HtmlWebpackPlugin通过hooks在生成前替换环境变量
+    const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
+    new InterpolateHtmlPlugin(HtmlWebpackPlugin, env.raw),
+

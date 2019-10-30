@@ -1,3 +1,7 @@
+'use strict';
+
+process.env.BABEL_ENV = 'development';
+process.env.NODE_ENV = 'development';
 
 const fs = require('fs-extra');
 // const path = require('path');
@@ -7,7 +11,7 @@ const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 const configFactory = require('../config/webpack.config')
 const paths = require('../config/paths');
-
+const env = require('../config/env')
 
 const chalk = require('react-dev-utils/chalk');
 const clearConsole = require('react-dev-utils/clearConsole');
@@ -80,11 +84,10 @@ checkBrowsers(paths.appPath, isInteractive)
             warnings: warnings => devServer.sockWrite(devServer.sockets, 'warnings', warnings),
             errors: errors => devServer.sockWrite(devServer.sockets, 'errors', errors)
         }
-
+        
         const compiler = createCompiler({
             appName, config, devSocket, urls, useYarn, useTypeScript, webpack
         })
-
         //加载代理
         const proxySetting = require(paths.appPackageJson).proxy;
         const proxyConfig = prepareProxy(proxySetting, paths.appPublic)
@@ -100,7 +103,7 @@ checkBrowsers(paths.appPath, isInteractive)
             }
 
             if (isInteractive) {
-                clearConsole();
+                // clearConsole();
             }
             console.log(chalk.cyan('Starting the development server...\n'));
             openBrowser(urls.localUrlForBrowser);
