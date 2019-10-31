@@ -58,7 +58,8 @@ process.env.PUBLIC_URL 当process.exit(0|1)退出后会被清空
 delete require.cache[require.resolve('./paths')];
 
 3. 替换html模版中的变量怎么实现？
-//使用InterpolateHtmlPlugin插件，在HtmlWebpackPlugin通过hooks在生成前替换环境变量
+
+在webpack插件中使用InterpolateHtmlPlugin插件，在HtmlWebpackPlugin通过hooks在生成前替换环境变量
     const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
     new InterpolateHtmlPlugin(HtmlWebpackPlugin, env.raw),
 
