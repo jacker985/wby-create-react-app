@@ -2,21 +2,21 @@
 
 const getClientEnvironment = require('./env');
 // const fs = require('fs');
-const paths = require('../config/paths');
+const paths = require('./paths');
 // const path = require("path")
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 
+const antdThemeOptions = require('./antd.theme');
 // style files regexes
 const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
-const sassRegex = /\.(scss|sass)$/;
-const sassModuleRegex = /\.module\.(scss|sass)$/;
 const lessRegex = /\.less$/;
 const lessModuleRegex = /\.module\.less$/;
+
+
 
 //require.resolve('style-loader')
 /**
@@ -47,14 +47,17 @@ module.exports = function (webpackEnv) {
         : isEnvDevelopment && '';
     // Get environment variables to inject into our app.
     const env = getClientEnvironment(publicUrl);
-    const getStyleLoaders = (cssOptions, preProcessor) => {
+    const getStyleLoaders = (cssOptions, preProcessor, preOptions={}) => {
         const loaders = [
             isEnvDevelopment && require.resolve('style-loader'),
             { loader: MiniCssExtractPlugin.loader, options: { publicPath: '../../' } },
             { loader: require.resolve('css-loader'), options: cssOptions },
         ].filter(Boolean);
         if (preProcessor) {
-            loaders.push({ loader: require.resolve(preProcessor), options: { sourceMap: true, javascriptEnabled: true } })
+            loaders.push({ 
+                loader: require.resolve(preProcessor), 
+                options: { sourceMap: true, javascriptEnabled: true, ...preOptions } 
+            })
         }
         return loaders;
     }
@@ -67,7 +70,10 @@ module.exports = function (webpackEnv) {
         ],
         output: {
             path: paths.appBuild,
-            publicPath: publicPath
+            publicPath: publicPath,
+            filename: isEnvProduction
+                ? 'static/js/[name].[contenthash:8].js'
+                : isEnvDevelopment && 'static/js/bundle.js'
         },
         module: {
             rules: [
@@ -121,7 +127,9 @@ module.exports = function (webpackEnv) {
                         {
                             test: lessRegex,
                             exclude: lessModuleRegex,
-                            use: getStyleLoaders({ importLoaders: 2, sourceMap: true }, 'less-loader')
+                            use: getStyleLoaders({ importLoaders: 2, sourceMap: true }, 'less-loader', {
+                                modifyVars: antdThemeOptions
+                            })
                         }
                     ]
                 }
