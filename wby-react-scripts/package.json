@@ -1,6 +1,6 @@
 {
   "name": "wby-react-scripts",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -16,6 +16,7 @@
     "@babel/core": "7.6.0",
     "@babel/plugin-proposal-class-properties": "^7.5.5",
     "@babel/plugin-proposal-decorators": "^7.6.0",
+    "@babel/plugin-transform-runtime": "^7.6.2",
     "@babel/preset-env": "^7.6.3",
     "@babel/preset-react": "^7.6.3",
     "@babel/runtime": "^7.6.3",
@@ -45,8 +46,5 @@
     "url-loader": "2.1.0",
     "webpack": "4.40.2",
     "webpack-dev-server": "3.2.1"
-  },
-  "devDependencies": {
-    "@babel/plugin-transform-runtime": "^7.6.2"
   }
 }
