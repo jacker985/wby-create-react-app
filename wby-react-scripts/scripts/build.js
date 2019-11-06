@@ -8,7 +8,7 @@ require('../config/env');
 const fs = require('fs-extra');
 
 const webpack = require('webpack');
-const configFactory = require('../config/webpack.config')
+const configFactory = require('../config/webpack.config.js')
 const paths = require('../config/paths');
 const chalk = require('react-dev-utils/chalk');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');

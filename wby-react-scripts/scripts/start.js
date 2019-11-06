@@ -9,7 +9,7 @@ const fs = require('fs-extra');
 
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
-const configFactory = require('../config/webpack.config')
+const configFactory = require('../config/webpack.config.js')
 const paths = require('../config/paths');
 const env = require('../config/env')
 
@@ -45,7 +45,7 @@ if (process.env.HOST) {
     console.log(
         chalk.cyan(
             `Attempting to bind to HOST environment variable: ${chalk.yellow(
-                chalk.blod(process.env.HOST)
+                // chalk.blod(process.env.HOST)
             )}`
         )
     )
