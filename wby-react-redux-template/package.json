@@ -13,7 +13,7 @@
 		"lazy-load-component": "^1.1.5",
 		"lodash": "^4.17.5",
 		"numeral": "^2.0.6",
-		"qs": "^6.5.2",
+		"qs": "^6.5.3",
 		"react": "^16.10.2",
 		"react-dnd": "^3.0.2",
 		"react-dnd-html5-backend": "^5.0.1",
